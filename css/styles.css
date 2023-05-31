@@ -229,6 +229,27 @@ body, button {
 .game {
     border-bottom: 1px solid var(--color-second);
     min-height: 58vh;
+    position: relative;
+    cursor: crosshair;
+}
+
+.dot {
+    width: 2rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #E1631B;
+    position: absolute;
+    transform: translate(-100%, -100%);
+    animation: 1s linear 1 pop;
+}
+
+@keyframes pop {
+    from {
+        transform: translate(-100%, -100%) scale(0.3);
+    }
+    to {
+        transform: translate(-100%, -100%) scale(1);
+    }
 }
 
 /* FOOTER */
