@@ -28,9 +28,9 @@
                 <div class="difficulty">
                     <h2 class="subtitle">Difficulté</h2>
                     <div class="difficulty__btns">
-                        <button class="btn btn--easy">Facile</button>
-                        <button class="btn btn--medium">Moyen</button>
-                        <button class="btn btn--hard">Difficile</button>
+                        <button class="btn btn--easy" data-diff="easy">Facile</button>
+                        <button class="btn btn--medium diff--active" data-diff="medium">Moyen</button>
+                        <button class="btn btn--hard" data-diff="hard">Difficile</button>
                     </div>
                 </div>
 
@@ -74,6 +74,7 @@
             <ul class="score-list">
                 <li class="score-item">Score Total : <span class="end-game__score"></span></li>
                 <li class="score-item">Précision Totale : <span class="end-game__accuracy"></span></li>
+                <li class="score-item">Difficulté : <span class="end-game__difficulty"></span></li>
             </ul>
             <p class="end-game__paragraph">Pressez sur la barre espace pour rejouer.</p>
         </div>

@@ -1,16 +1,22 @@
 const app = {
     // Sélecteurs
     themeBtn: document.querySelector(".btn--theme"),
-    pastilles: document.querySelector(".colors").querySelectorAll(".pastille"),
-    container: document.querySelector(".container"),
     startBtn: document.querySelector(".btn--game-status"),
+    pastilles: document.querySelector(".colors").querySelectorAll(".pastille"),
+    difficultyBtns: document.querySelector(".difficulty__btns"),
+
+    container: document.querySelector(".container"),
     game: document.querySelector(".game"),
+
     scorePoints: document.querySelector("#score"),
     scoreAccuracy: document.querySelector("#accuracy"),
     timer: document.querySelector(".timer__counter"),
+
     endGameModal: document.querySelector(".end-game"),
     endGameScore: document.querySelector(".end-game__score"),
     endGameAccuracy: document.querySelector(".end-game__accuracy"),
+    endGameDiff: document.querySelector(".end-game__difficulty"),
+
 
     // Variables
     score: 0,
@@ -21,7 +27,8 @@ const app = {
     // Fonctions
     init: function(){
         app.scorePoints.textContent = app.score; 
-        app.gameSettings("colors__first", 59, 1)
+        app.gameSettings(59,"medium")
+        app.handleDifficulty();
         app.handleTheme();
         app.handleTargetColor();
         app.startBtn.addEventListener("click", app.startGame);
@@ -72,14 +79,61 @@ const app = {
     },
 
     /**
-     * Gère les paramètres de la partie en terme de difficulté et de couleur des cibles
+     * Permet de gérer les paramètres de la partie en terme de difficulté et de couleur des cibles
      */
-    gameSettings: function(defaultColor, defaultTime, defaultTargetSize){
-        app.dotColor = defaultColor;
-        app.seconds = defaultTime;
-        // ATTENTION, la taille est exprimée en rem
-        app.targetSize = defaultTargetSize;
+    gameSettings: function(time, defaultDiff){
+        app.dotColor = "colors__first";
+        app.seconds = time;
+        app.difficulty = defaultDiff;
+
+        app.changeDifficulty(app.difficulty)
     },
+
+    /**
+     * Permet de gérer la difficulté
+     */
+    handleDifficulty(){
+        app.levelBtn = app.difficultyBtns.querySelectorAll(".btn");
+
+        app.levelBtn.forEach(el => {
+            el.addEventListener("click", setLevel)
+        })
+
+        function setLevel(e) {
+            // On empêche de changer la difficulté pendant la partie
+            if (app.gameOn){return}
+            // On change la difficulté en fonction du contenu du bouton
+            app.difficulty = e.currentTarget.getAttribute("data-diff")
+
+            // Pour chaque bouton, on vérifie si il contient la classe diff--active
+            // Si oui alors on remove cette class et on l'ajoute au bouton clické
+            app.levelBtn.forEach(el => {
+                if (el.classList.contains("diff--active")){
+                    el.classList.remove("diff--active")
+                }
+                e.currentTarget.classList.add("diff--active")
+            })
+
+            app.changeDifficulty(app.difficulty)
+        }
+    },
+    /**
+     * Permet de changer la difficulté et d'y appliquer les paramètres
+     */
+    changeDifficulty: function(diff) {
+        // ATTENTION, la taille est exprimée en rem
+        if (diff === "easy"){
+            app.targetSize = 2;
+            app.dotAnimation = "1s linear 1 pop";
+        } else if (diff === "medium"){
+            app.targetSize = 1.5;
+            app.dotAnimation = "s linear infinite alternate pop";
+        } else if (diff === "hard") {
+            app.targetSize = 1;
+            app.dotAnimation = ".5s ease-in-out infinite alternate hard";
+        }
+    },
+
     /**
      * Démarre la partie
      */
@@ -140,8 +194,17 @@ const app = {
         } else {
             app.endGameAccuracy.style.color = "crimson";
         }
-        app.endGameScore.textContent = `${app.score} pts`
-        app.endGameAccuracy.textContent = `${app.accuracy}%`
+        app.endGameScore.textContent = `${app.score} pts`;
+        app.endGameAccuracy.textContent = `${app.accuracy}%`;
+
+        if (app.difficulty === "easy"){
+            app.endGameDiff.style.color = "green";
+        } else if (app.difficulty === "medium"){
+            app.endGameDiff.style.color = "orange";
+        } else {
+            app.endGameDiff.style.color = "crimson";
+        }
+        app.endGameDiff.textContent = app.difficulty;
     },
 
 
@@ -152,6 +215,7 @@ const app = {
         const newTarget = document.createElement("div");
         newTarget.classList.add("dot");
         newTarget.style.width = app.targetSize + "rem";
+        newTarget.style.animation = app.dotAnimation;
         newTarget.classList.add(app.dotColor);
         newTarget.style.top = app.getRandomNumber(6,100) + "%";
         newTarget.style.left = app.getRandomNumber(3,100) + "%";

@@ -139,6 +139,11 @@ body, button {
     gap: 1rem;
 }
 
+.diff--active {
+    transform: scale(1.05);
+    border: var(--border-alt)!important;
+}
+
 .difficulty__btns {
     display: flex;
     gap: 1rem;
@@ -245,7 +250,9 @@ body, button {
     border-radius: 50%;
     position: absolute;
     transform: translate(-100%, -100%);
-    animation: 1s linear 1 pop;
+    /* animation: 1s linear 1 pop; */
+    animation: 1s linear infinite alternate pop;
+    /* animation: .5s ease-in-out infinite alternate hard; */
 }
 
 @keyframes pop {
@@ -254,6 +261,17 @@ body, button {
     }
     to {
         transform: translate(-100%, -100%) scale(1);
+    }
+}
+
+@keyframes hard {
+    from {
+        transform: translate(-100%, -100%);
+        margin-left: 0;
+    }
+    to {
+        transform: translate(-100%, -100%);
+        margin-left: 50px;
     }
 }
 
@@ -313,7 +331,7 @@ body, button {
     justify-content: space-between;
 }
 
-.end-game__score, .end-game__accuracy {
+.end-game__score, .end-game__accuracy, .end-game__difficulty {
     font-weight: bold;
     font-size: 1.2rem;
 }
