@@ -4,7 +4,10 @@ const app = {
     startBtn: document.querySelector(".btn--game-status"),
     pastilles: document.querySelector(".colors").querySelectorAll(".pastille"),
     difficultyBtns: document.querySelector(".difficulty__btns"),
-
+    rulesBtn: document.querySelector(".btn--rules"),
+    modalBtn: document.querySelector(".btn--modal"),
+    
+    dialog: document.querySelector("dialog"),
     container: document.querySelector(".container"),
     game: document.querySelector(".game"),
 
@@ -17,7 +20,6 @@ const app = {
     endGameAccuracy: document.querySelector(".end-game__accuracy"),
     endGameDiff: document.querySelector(".end-game__difficulty"),
 
-
     // Variables
     score: 0,
     accuracy: 100,
@@ -25,7 +27,7 @@ const app = {
     numberOfClick: 0,
 
     // Fonctions
-    init: function(){
+    init(){
         app.scorePoints.textContent = app.score; 
         app.gameSettings(59,"medium")
         app.handleDifficulty();
@@ -38,11 +40,14 @@ const app = {
                 app.startGame();
             }
         })
+        app.rulesBtn.addEventListener("click", app.openModal)
+        app.modalBtn.addEventListener("click", ()=>{app.dialog.close()})
+        app.dialog.addEventListener("click", app.closeModal)
     },
     /**
      * Permet de changer de thème : dark <=> light
      */
-    handleTheme: function() {
+    handleTheme() {
         app.themeIcon = app.themeBtn.querySelector("i");
         app.themeBtn.addEventListener("click", function () {
             if (app.themeIcon.classList.contains('bi-brightness-high')){
@@ -58,7 +63,7 @@ const app = {
     /**
      * Permet de gérer la couleur des targets
      */
-    handleTargetColor: function () {
+    handleTargetColor () {
         app.pastilles.forEach(el => {
             el.addEventListener("click", setColor)
         })
@@ -81,7 +86,7 @@ const app = {
     /**
      * Permet de gérer les paramètres de la partie en terme de difficulté et de couleur des cibles
      */
-    gameSettings: function(time, defaultDiff){
+    gameSettings(time, defaultDiff){
         app.dotColor = "colors__first";
         app.seconds = time;
         app.difficulty = defaultDiff;
@@ -120,7 +125,7 @@ const app = {
     /**
      * Permet de changer la difficulté et d'y appliquer les paramètres
      */
-    changeDifficulty: function(diff) {
+    changeDifficulty(diff) {
         // ATTENTION, la taille est exprimée en rem
         if (diff === "easy"){
             app.targetSize = 2;
@@ -137,7 +142,7 @@ const app = {
     /**
      * Démarre la partie
      */
-    startGame: function() {
+    startGame() {
         app.game.textContent = "";
         app.endGameModal.classList.add("hidden");
         if (!app.gameOn){
@@ -154,7 +159,7 @@ const app = {
             app.gameOn = false;
         }
     },
-    handleAccuracy: function(){
+    handleAccuracy(){
         app.numberOfClick += 1;
         app.accuracy = app.setAccuracy();
         app.scoreAccuracy.textContent = `${app.accuracy}%`
@@ -164,7 +169,7 @@ const app = {
     /**
      * Reset la partie en attribuant les valeurs par défaut
      */
-    resetGame: function() {
+    resetGame() {
         clearInterval(app.intervalId);
         app.game.removeEventListener("click", app.handleAccuracy);
         app.seconds = 59;
@@ -184,7 +189,7 @@ const app = {
     /**
      * Fin de partie. On affiche le score ou d'autres informations pertinentes.
      */
-    endGame: function(){
+    endGame(){
         app.gameOn = false;
         app.endGameModal.classList.remove("hidden");
         if (app.accuracy >= 80){
@@ -211,7 +216,7 @@ const app = {
     /**
      * Apparition des cibles de manière aléatoire
      */
-    popTarget: function() {
+    popTarget() {
         const newTarget = document.createElement("div");
         newTarget.classList.add("dot");
         newTarget.style.width = app.targetSize + "rem";
@@ -233,7 +238,7 @@ const app = {
     /**
      * Génération d'un nombre aléatoire compris en min (inclus) et max (inclus)
      */
-    getRandomNumber: function(min, max){
+    getRandomNumber(min, max){
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -242,7 +247,7 @@ const app = {
     /**
      * Retourne la précision en pourcentage
      */
-    setAccuracy: function(){
+    setAccuracy(){
         // Formule : (score / nombre de click total)*100
         return Math.round((app.score / app.numberOfClick)*100)
     },
@@ -250,7 +255,7 @@ const app = {
     /**
      * Permet de lancer le timer
      */
-    setTimer: function() {
+    setTimer() {
         app.timer.textContent = "01 : 00";
         app.intervalId = setInterval(playTimer,1000);
 
@@ -271,7 +276,25 @@ const app = {
                 app.resetGame();
             }
         }
-    }
+    },
+
+    /** Gère la fenêtre modal pour les règles */
+    openModal(){
+        app.dialog.showModal();
+
+    },
+
+    closeModal(e){
+        const dialogDimensions = app.dialog.getBoundingClientRect()
+        if (
+            e.clientX < dialogDimensions.left ||
+            e.clientX > dialogDimensions.right ||
+            e.clientY < dialogDimensions.top ||
+            e.clientY > dialogDimensions.bottom
+        ) {
+            app.dialog.close()
+        }
+    },
 };
 
 document.addEventListener("DOMContentLoaded", app.init);

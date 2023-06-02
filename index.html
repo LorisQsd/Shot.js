@@ -18,6 +18,18 @@
 <body>
     <div class="container" id="theme-dark">
         <header class="header">
+            <dialog class="modal rules">
+                <h2 class="subtitle">Règles</h2>
+                <p class="modal__paragraph">Les règles sont simples :</p>
+                <ul class="modal__list">
+                    <li class="modal__list-item">Des cibles vont apparaîtres</li>
+                    <li class="modal__list-item">Vous devrez cliquer dessus le plus rapidement possible</li>
+                    <li class="modal__list-item">Chaque cible touchée vous rapportera un point</li>
+                    <li class="modal__list-item">Si vous manquez votre cible, votre précision baissera</li>
+                    <li class="modal__list-item">Vous pouvez changer le thème, ainsi que la couleur des cibles et la difficulté</li>
+                </ul>
+                <button class="btn btn--modal"></button>
+            </dialog>
             <button class="btn btn--rules">Règles</button>
             <h1 class="header__title">Shot.js</h1>
             <button class="btn btn--theme"><i class="bi-brightness-high"></i></button>
@@ -68,7 +80,7 @@
                 </div>
             </div>
         </footer>
-        <div class="end-game hidden">
+        <div class="modal end-game hidden">
             <h2 class="subtitle">Fin de la partie </h2>
             <p class="end-game__paragraph">Voici tes résultats :</p>
             <ul class="score-list">

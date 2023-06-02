@@ -307,11 +307,6 @@ body, button {
     position: absolute;
     top: 45%;
     left: 50%;
-    padding: 2rem 3rem;
-    border-radius: 1rem;
-    box-shadow: var(--shadow);
-    color: var(--color-main);
-    background-color: var(--color-second);
     transform: translate(-50%, -50%);
 }
 
@@ -334,4 +329,48 @@ body, button {
 .end-game__score, .end-game__accuracy, .end-game__difficulty {
     font-weight: bold;
     font-size: 1.2rem;
+}
+
+/* MODAL - RULES */
+
+.modal {
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+    color: var(--color-main);
+    background-color: var(--color-second);
+    position: relative;
+}
+
+.rules .subtitle {
+    margin-bottom: 1rem;
+}
+
+.modal__list {
+    padding-left: 1rem;
+}
+
+.modal__list-item {
+    margin: 0.5rem 0;
+}
+
+.modal__list-item::before {
+    content: "- ";
+}
+
+.btn--modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.7rem;
+    border-radius: 50%;
+}
+
+.btn--modal::after {
+    content: "X";
+    font-size: 0.7rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
