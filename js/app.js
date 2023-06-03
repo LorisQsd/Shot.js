@@ -122,7 +122,7 @@ const app = {
             app.dotAnimation = "1s linear 1 pop";
         } else if (diff === "medium"){
             app.targetSize = 1.5;
-            app.dotAnimation = "s linear infinite alternate pop";
+            app.dotAnimation = "1.5s linear infinite alternate pop-reverse";
         } else if (diff === "hard") {
             app.targetSize = 1;
             app.dotAnimation = ".5s ease-in-out infinite alternate hard";
@@ -152,7 +152,6 @@ const app = {
         app.accuracy = app.setAccuracy();
         app.scoreAccuracy.textContent = `${app.accuracy}%`
     },
-
 
     /** Reset la partie en attribuant les valeurs par défaut */
     resetGame() {
@@ -196,7 +195,6 @@ const app = {
         app.endGameDiff.textContent = app.difficulty;
     },
 
-
     /** Apparition des cibles de manière aléatoire */
     popTarget() {
         const newTarget = document.createElement("div");
@@ -204,8 +202,8 @@ const app = {
         newTarget.style.width = app.targetSize + "rem";
         newTarget.style.animation = app.dotAnimation;
         newTarget.classList.add(app.dotColor);
-        newTarget.style.top = app.getRandomNumber(6,100) + "%";
-        newTarget.style.left = app.getRandomNumber(3,100) + "%";
+        newTarget.style.top = app.getRandomNumber(5,90) + "%";// marge top max supplémentaire pour éviter la pénétration
+        newTarget.style.left = app.getRandomNumber(3,99) + "%";
 
         app.game.appendChild(newTarget)
 

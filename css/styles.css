@@ -255,6 +255,8 @@ body, button {
     /* animation: .5s ease-in-out infinite alternate hard; */
 }
 
+/* ANIMATIONS */
+
 @keyframes pop {
     from {
         transform: translate(-100%, -100%) scale(0.3);
@@ -264,14 +266,23 @@ body, button {
     }
 }
 
+@keyframes pop-reverse {
+    from {
+        transform: translate(-100%, -100%) scale(1);
+    }
+    to {
+        transform: translate(-100%, -100%) scale(0.3);
+    }
+}
+
 @keyframes hard {
     from {
         transform: translate(-100%, -100%);
-        margin-left: 0;
+        margin-top: 0;
     }
     to {
         transform: translate(-100%, -100%);
-        margin-left: 50px;
+        margin-top: 50px;
     }
 }
 
@@ -301,13 +312,6 @@ body, button {
 /* Endgame popup */
 .hidden {
     display: none;
-}
-
-.end-game {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .end-game__paragraph {
@@ -340,6 +344,13 @@ body, button {
     color: var(--color-main);
     background-color: var(--color-second);
     position: relative;
+}
+
+.end-game {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .rules .subtitle {
