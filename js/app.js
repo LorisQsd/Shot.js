@@ -44,9 +44,7 @@ const app = {
         app.modalBtn.addEventListener("click", ()=>{app.dialog.close()})
         app.dialog.addEventListener("click", app.closeModal)
     },
-    /**
-     * Permet de changer de thème : dark <=> light
-     */
+    /** Permet de changer de thème : dark <=> light */
     handleTheme() {
         app.themeIcon = app.themeBtn.querySelector("i");
         app.themeBtn.addEventListener("click", function () {
@@ -60,9 +58,7 @@ const app = {
         })
     },
 
-    /**
-     * Permet de gérer la couleur des targets
-     */
+    /** Permet de gérer la couleur des targets */
     handleTargetColor () {
         app.pastilles.forEach(el => {
             el.addEventListener("click", setColor)
@@ -83,9 +79,7 @@ const app = {
         }
     },
 
-    /**
-     * Permet de gérer les paramètres de la partie en terme de difficulté et de couleur des cibles
-     */
+    /** Permet de gérer les paramètres de la partie en terme de difficulté et de couleur des cibles */
     gameSettings(time, defaultDiff){
         app.dotColor = "colors__first";
         app.seconds = time;
@@ -94,9 +88,7 @@ const app = {
         app.changeDifficulty(app.difficulty)
     },
 
-    /**
-     * Permet de gérer la difficulté
-     */
+    /** Permet de gérer la difficulté */
     handleDifficulty(){
         app.levelBtn = app.difficultyBtns.querySelectorAll(".btn");
 
@@ -122,9 +114,7 @@ const app = {
             app.changeDifficulty(app.difficulty)
         }
     },
-    /**
-     * Permet de changer la difficulté et d'y appliquer les paramètres
-     */
+    /** Permet de changer la difficulté et d'y appliquer les paramètres */
     changeDifficulty(diff) {
         // ATTENTION, la taille est exprimée en rem
         if (diff === "easy"){
@@ -139,9 +129,7 @@ const app = {
         }
     },
 
-    /**
-     * Démarre la partie
-     */
+    /** Démarre la partie */
     startGame() {
         app.game.textContent = "";
         app.endGameModal.classList.add("hidden");
@@ -166,9 +154,7 @@ const app = {
     },
 
 
-    /**
-     * Reset la partie en attribuant les valeurs par défaut
-     */
+    /** Reset la partie en attribuant les valeurs par défaut */
     resetGame() {
         clearInterval(app.intervalId);
         app.game.removeEventListener("click", app.handleAccuracy);
@@ -186,9 +172,7 @@ const app = {
         app.timer.style.color = "var(--color-second)"
     },
 
-    /**
-     * Fin de partie. On affiche le score ou d'autres informations pertinentes.
-     */
+    /** Fin de partie. On affiche le score ou d'autres informations pertinentes. */
     endGame(){
         app.gameOn = false;
         app.endGameModal.classList.remove("hidden");
@@ -213,9 +197,7 @@ const app = {
     },
 
 
-    /**
-     * Apparition des cibles de manière aléatoire
-     */
+    /** Apparition des cibles de manière aléatoire */
     popTarget() {
         const newTarget = document.createElement("div");
         newTarget.classList.add("dot");
@@ -235,26 +217,20 @@ const app = {
         })
     },
 
-    /**
-     * Génération d'un nombre aléatoire compris en min (inclus) et max (inclus)
-     */
+    /** Génération d'un nombre aléatoire compris en min (inclus) et max (inclus) */
     getRandomNumber(min, max){
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
     },
 
-    /**
-     * Retourne la précision en pourcentage
-     */
+    /** Retourne la précision en pourcentage */
     setAccuracy(){
         // Formule : (score / nombre de click total)*100
         return Math.round((app.score / app.numberOfClick)*100)
     },
 
-    /**
-     * Permet de lancer le timer
-     */
+    /** Permet de lancer le timer */
     setTimer() {
         app.timer.textContent = "01 : 00";
         app.intervalId = setInterval(playTimer,1000);
